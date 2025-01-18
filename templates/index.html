@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Lista de tarefas</title>
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h1>Lista de tarefas</h1>
+
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+        {% for tarefa in tarefas %}
+            <tr>
+                <td>{{ tarefa.nome }}</td>
+                <td>{{ tarefa.status }}</td>
+                <td>{{tarefa.dataAdd.date()}}</td>
+                <td>
+                    <a href="/delete/{{tarefa.id}}">Delete</a>
+                    <br>
+                    <a href="">Update</a>
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+
+    <form action="/" method="POST">
+        <input type="text" name="nome" id="nome">
+        <input type="submit" value="adicionar tarefa">
+    </form>
+</div>
+{% endblock %}
