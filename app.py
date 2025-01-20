@@ -15,7 +15,7 @@ class Lista(db.Model):
     def __repr__(self):
         return '<Task %r>' % self.id
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods = ['POST', 'GET'])
 def index():
     if request.method == 'POST':
         nomeTarefa = request.form['nome']
@@ -40,6 +40,23 @@ def delete(id):
         return redirect('/')
     except:
         return "erro ao excluir tarefa"
+
+@app.route('/update/<int:id>', methods = ['GET', 'POST'])
+def update(id):
+    idTarefa = Lista.query.get_or_404(id)
+
+    if request.method == 'POST':
+        idTarefa.nome = request.form['nome']
+        idTarefa.status = request.form['status']
+
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return "erro ao atualizar a tarefa"
+
+    else:
+        return render_template('update.html', tarefa = idTarefa )    
 
 if __name__ == "__main__":
     app.run(debug=True)

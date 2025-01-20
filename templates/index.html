@@ -8,26 +8,35 @@
 <div class="content">
     <h1>Lista de tarefas</h1>
 
+    {% if tarefas|length < 1 %}
+    <h4>Nenhuma tarefa criada no momento</h4>
+
+    {% else %}
     <table>
         <tr>
+            <th>id</th>
             <th>Nome</th>
             <th>Status</th>
             <th>Data</th>
             <th>Ações</th>
         </tr>
+
         {% for tarefa in tarefas %}
             <tr>
+                <td>{{tarefa.id}}</td>
                 <td>{{ tarefa.nome }}</td>
                 <td>{{ tarefa.status }}</td>
                 <td>{{tarefa.dataAdd.date()}}</td>
                 <td>
-                    <a href="/delete/{{tarefa.id}}">Delete</a>
+                    <a href="/delete/{{tarefa.id}}">Excluir</a>
                     <br>
-                    <a href="">Update</a>
+                    <a href="/update/{{tarefa.id}}">Atualizar</a>
                 </td>
             </tr>
             {% endfor %}
+
     </table>
+    {% endif %}
 
     <form action="/" method="POST">
         <input type="text" name="nome" id="nome">
